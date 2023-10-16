@@ -5,6 +5,7 @@
 
 """Docker Disk Usage Exporter"""
 
+import json
 import logging
 import os
 import sys
@@ -27,11 +28,6 @@ DOCKER_DISK_USAGE_EXPORTER_LOGLEVEL = os.environ.get(
     "DOCKER_DISK_USAGE_EXPORTER_LOGLEVEL", "INFO"
 ).upper()
 DOCKER_DISK_USAGE_EXPORTER_TZ = os.environ.get("TZ", "Europe/Paris")
-
-DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS = os.environ.get(
-    "DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS", None
-)
-
 
 def make_wsgi_app(
     registry: CollectorRegistry = REGISTRY, disable_compression: bool = False
@@ -131,6 +127,17 @@ try:
     )
 except ValueError:
     logging.error("DOCKER_DISK_USAGE_EXPORTER_PORT must be int !")
+    os._exit(1)
+
+# Check DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS
+try:
+    DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS = json.loads(
+        os.environ.get("DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS", "{}")
+    )
+except TypeError:
+    DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS = "{}"
+except json.decoder.JSONDecodeError:
+    logging.error("DOCKER_DISK_USAGE_EXPORTER_CONTAINERS_FILTERS invalid !")
     os._exit(1)
 
 METRICS = [
