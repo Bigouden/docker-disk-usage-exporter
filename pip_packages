@@ -1,0 +1,10 @@
+certifi
+chardet
+docker
+idna
+packaging
+prometheus_client
+pytz
+requests
+urllib3
+websocket
