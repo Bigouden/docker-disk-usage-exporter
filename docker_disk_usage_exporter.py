@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 # coding: utf-8
-# pyright: reportMissingImports=false, reportGeneralTypeIssues=false
+# pyright: reportMissingImports=false
+# pyright: reportGeneralTypeIssues=false
 # pyright: reportOptionalMemberAccess=false
+# pyright: reportMissingModuleSource=false
+# pyright: reportAttributeAccessIssue=false
 
 """Docker Disk Usage Exporter"""
 
