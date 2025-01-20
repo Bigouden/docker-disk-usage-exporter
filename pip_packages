@@ -1,10 +1,10 @@
 certifi
 chardet
 docker
-idna
 packaging
+idna>=3.7
 prometheus_client
 pytz
-requests
-urllib3
+requests>=2.32.0
+urllib3>=1.26.19
 websocket
